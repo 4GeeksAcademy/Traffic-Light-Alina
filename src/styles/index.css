@@ -10,3 +10,22 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+.container > * {
+    width: 100px;
+    height: 100px;
+    margin: 3px;
+    border-radius: 100%;
+    background-color: aqua;
+}
+.container{
+    width: fit-content;
+}
+.selected{
+    width: 150px;
+    height: 150px;
+    background-color: bisque;
+}
+
+.boxShadow{
+    box-shadow: 0 0 20px 10px #ffffff9c;
+}
