@@ -1,96 +1,87 @@
 import React, {useState, useEffect } from "react";
 import Light from "./TrafficLight";
 
-//create your first component
 const Home = () => {
-	const [classRed, setClassRed] = useState("")
-	const [classYellow, setClassYellow] = useState("")
-	const [classGreen, setClassGreen] = useState("")
-	const [classPurple, setClassPurple] = useState("")
-	const [divsArray, setDivsArray] = useState([]);
-														
+	const [boxShadowRed, setBoxShadowRed] = useState("")
+	const [boxShadowYellow, setBoxShadowYellow] = useState("")
+	const [boxShadowGreen, setBoxShadowGreen] = useState("")
+	const [boxShadowPurple, setBoxShadowPurple] = useState("")
+	const [divsToRender, setdivsToRender] = useState([]);													
 	const [colorArray, setColorArray] = useState(["red", "yellow", "green"]);
+	const [buttonColor, setButtonColor] = useState("btn-success")
+	const [buttonText, setButtonText] = useState("Add purple")
 
 	useEffect(() => {
-        setDivsArray([
-            <Light color="bg-danger" style={classRed} onClick={() => giveShadowTo("red")} />,
-            <Light color="bg-warning" style={classYellow} onClick={() => giveShadowTo("yellow")} />,
-            <Light color="bg-success" style={classGreen} onClick={() => giveShadowTo("green")} />,
-            ...(colorArray.includes("purple") ? [<Light color="bg-purple" style={classPurple} onClick={() => giveShadowTo("purple")} />] : [])
+        setdivsToRender([
+            <Light color="bg-danger" style={boxShadowRed} onClick={() => giveShadowTo("red")} />,
+            <Light color="bg-warning" style={boxShadowYellow} onClick={() => giveShadowTo("yellow")} />,
+            <Light color="bg-success" style={boxShadowGreen} onClick={() => giveShadowTo("green")} />,
+            ...(colorArray.includes("purple") ? [<Light color="bg-purple" style={boxShadowPurple} onClick={() => giveShadowTo("purple")} />] : [])
         ]);
-    }, [classRed, classYellow, classGreen, classPurple, colorArray]);
+    }, [boxShadowRed, boxShadowYellow, boxShadowGreen, boxShadowPurple, colorArray]);
 
 	function giveShadowTo (valor) {
-		setClassGreen("")
-		setClassRed("")
-		setClassYellow("")
-		setClassPurple("")
+		setBoxShadowGreen("")
+		setBoxShadowRed("")
+		setBoxShadowYellow("")
+		setBoxShadowPurple("")
 		switch (valor) {
 			case "red":
-				setClassRed("rgb(241 2 2 / 72%) 0 0 20px 10px")
+				setBoxShadowRed("rgb(241 2 2 / 72%) 0 0 20px 10px")
 				break;
 			case "yellow":
-				setClassYellow("rgb(232 241 2 / 72%) 0px 0px 20px 10px")
+				setBoxShadowYellow("rgb(232 241 2 / 72%) 0px 0px 20px 10px")
 				break;
 			case "green":
-				setClassGreen("rgb(6 160 52 / 72%) 0px 0px 20px 10px")
+				setBoxShadowGreen("rgb(6 160 52 / 72%) 0px 0px 20px 10px")
 				break;
 			case "purple":
-				setClassPurple("rgb(6 160 52 / 72%) 0px 0px 20px 10px")
+				setBoxShadowPurple("rgb(100 6 160 / 92%) 0px 0px 20px 10px")
 		}
-		
 	}
 
-	function changeColor (array) {
-		const classesArray = [classRed, classYellow, classGreen, classPurple]
+	function shadowNextColor (array) {
+		const classesArray = [boxShadowRed, boxShadowYellow, boxShadowGreen, boxShadowPurple]
 
 		for (let index = 0; index < array.length; ++index) {
-
-			console.log(array)
 			if (classesArray[index] != ""){
-				// console.log("ConditionMet " + index)
 				let nextIndex = index + 1 >= array.length ? 0 : index + 1
 				giveShadowTo(array[nextIndex])
-				// console.log("ConditionMet NextColorIndex " + nextIndex)
 				break;
 			}
 		}
-		// classGreen !== ""  ? indexArray= 2 : classRed !== "" ? indexArray= 0 : classYellow !== "" ? indexArray = 1 : indexArray = 3
-		// 
-		// giveShadowTo(array[indexArray])
 	}
 
 	function addPurple() {
-        setColorArray((prevColors) => {
-			if(prevColors.includes("purple")) {
-				prevColors.pop()
-				// console.log("With purple " + prevColors)
-				return [...prevColors]
+        setColorArray((prevColor) => {
+			if(prevColor.includes("purple")) {
+				prevColor.pop()
+				return [...prevColor]
 			}
-			// console.log("Without purple " + [...prevColors, "purple"])
-
-			return [...prevColors, "purple"]
+			return [...prevColor, "purple"]
         });
+
+		setButtonColor((prevButtonColor)=> {
+			return prevButtonColor === "btn-success" ? "btn-danger" : "btn-success"
+		})
+
+		setButtonText((prevText)=> {
+			return prevText === "Add purple" ? "Remove purple" : "Add purple"
+		})
     }
-	// function addPurple() {
-    //     setColorArray((prevColors) => {
-    //         if (!prevColors.includes("purple")) {
-	// 			console.log(prevColors)
-    //             return [...prevColors, "purple"];
-    //         }
-	// 		console.log(prevColors)
-    //         return prevColors;
-    //     });
-    // }
 
 
-	return (<div className="d-flex align-items-center flex-column bg-secondary">
-				<div className="trafficTop"></div>
-				<div className="container bg-dark p-3 rounded-4">
-					{divsArray}
+	return (<div className="d-flex align-items-center justify-content-center flex-column bg-secondary vh-100">
+				<div className="h-50 d-flex align-items-center justify-content-center flex-column">
+					<div className="container bg-dark p-3 rounded-4">
+						{divsToRender}
+					</div>
+					<div className="bg-dark pole"></div>
 				</div>
-				<button className="btn btn-success w-25 m-5" onClick={()=>changeColor(colorArray)}>Change color</button>
-				<button className="btn btn-success w-25 m-5" onClick={addPurple}>Add purple</button>
+				<div className="d-flex align-items-center flex-column h-50">
+					<button className="btn btn-success" onClick={()=>shadowNextColor(colorArray)}>Change color</button>
+					<button className={`btn mt-2 ${buttonColor}`} onClick={addPurple}>{buttonText}</button>
+				</div>
 			</div>)
 };
 
