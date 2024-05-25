@@ -60,33 +60,33 @@ const Home = () => {
 		// giveShadowTo(array[indexArray])
 	}
 
-	// function addPurple() {
-    //     setColorArray((prevColors) => {
-	// 		if(prevColors.includes("purple")) {
-	// 			prevColors.pop()
-	// 			console.log(prevColors)
-	// 			return prevColors
-	// 		}
-	// 		console.log([...prevColors, "purple"])
-
-	// 		return [...prevColors, "purple"]
-    //     });
-    // }
 	function addPurple() {
         setColorArray((prevColors) => {
-            if (!prevColors.includes("purple")) {
-				console.log(prevColors)
-                return [...prevColors, "purple"];
-            }
-			console.log(prevColors)
-            return [prevColors];
+			if(prevColors.includes("purple")) {
+				prevColors.pop()
+				// console.log("With purple " + prevColors)
+				return [...prevColors]
+			}
+			// console.log("Without purple " + [...prevColors, "purple"])
+
+			return [...prevColors, "purple"]
         });
     }
+	// function addPurple() {
+    //     setColorArray((prevColors) => {
+    //         if (!prevColors.includes("purple")) {
+	// 			console.log(prevColors)
+    //             return [...prevColors, "purple"];
+    //         }
+	// 		console.log(prevColors)
+    //         return prevColors;
+    //     });
+    // }
 
 
-	return (<div className="d-flex align-items-center flex-column">
+	return (<div className="d-flex align-items-center flex-column bg-secondary">
 				<div className="trafficTop"></div>
-				<div className="container bg-dark p-3 ">
+				<div className="container bg-dark p-3 rounded-4">
 					{divsArray}
 				</div>
 				<button className="btn btn-success w-25 m-5" onClick={()=>changeColor(colorArray)}>Change color</button>
